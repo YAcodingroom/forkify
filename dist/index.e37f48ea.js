@@ -622,6 +622,8 @@ const renameKeys = function(obj) {
 };
 const showRecipe = async function() {
     try {
+        const id = window.location.hash.slice(1);
+        if (!id) return;
         renderSpinner(recipeContainer);
         const res = await fetch("https://forkify-api.herokuapp.com/api/v2/recipes/664c8f193e7aa067e94e8706");
         const data = await res.json();
@@ -722,7 +724,10 @@ const showRecipe = async function() {
         console.error(err.message);
     }
 };
-showRecipe();
+[
+    "load",
+    "hashchange"
+].forEach((e)=>window.addEventListener(e, showRecipe));
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../img/icons.svg":"loVOp","core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {

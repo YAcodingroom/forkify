@@ -44,6 +44,9 @@ const renameKeys = function (obj) {
 
 const showRecipe = async function () {
   try {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+
     renderSpinner(recipeContainer);
 
     const res = await fetch(
@@ -159,4 +162,4 @@ const showRecipe = async function () {
   }
 };
 
-showRecipe();
+['load', 'hashchange'].forEach(e => window.addEventListener(e, showRecipe));
