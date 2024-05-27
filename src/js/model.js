@@ -27,8 +27,6 @@ export const loadRecipe = async function (id) {
     if (!res.ok) throw new Error(`${data.message} (${res.status})`);
 
     state.recipe = renameKeys(data.data.recipe);
-
-    console.log(state.recipe);
   } catch (err) {
     console.error(err.message);
   }
