@@ -586,6 +586,7 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"aenu9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _webImmediateJs = require("core-js/modules/web.immediate.js");
+var _modelJs = require("./model.js");
 var _iconsSvg = require("url:../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 var _runtime = require("regenerator-runtime/runtime");
@@ -610,26 +611,13 @@ const renderSpinner = function(parentEl) {
     parentEl.innerHTML = "";
     parentEl.insertAdjacentHTML("afterbegin", markup);
 };
-const renameKeys = function(obj) {
-    const keyValues = Object.keys(obj).map((key)=>{
-        const index = key.indexOf("_");
-        const newKey = index > 1 ? `${key.slice(0, index)}${key.slice(index + 1)[0].toUpperCase()}${key.slice(index + 2)}` : key;
-        return {
-            [newKey]: obj[key]
-        };
-    });
-    return Object.assign({}, ...keyValues);
-};
 const showRecipe = async function() {
     try {
         const id = window.location.hash.slice(1);
         if (!id) return;
         renderSpinner(recipeContainer);
-        const res = await fetch("https://forkify-api.herokuapp.com/api/v2/recipes/664c8f193e7aa067e94e8706");
-        const data = await res.json();
-        if (!res.ok) throw new Error(`${data.message} (${res.status})`);
-        const recipe = renameKeys(data.data.recipe);
-        console.log(recipe);
+        await _modelJs.loadRecipe(id);
+        const { recipe } = _modelJs.state;
         const markup = `
       <figure class="recipe__fig">
         <img src="${recipe.imageUrl}" alt="${recipe.title}" class="recipe__img" />
@@ -729,7 +717,7 @@ const showRecipe = async function() {
     "hashchange"
 ].forEach((e)=>window.addEventListener(e, showRecipe));
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../img/icons.svg":"loVOp","core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ"}],"gkKU3":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../img/icons.svg":"loVOp","core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ","./model.js":"Y4A21"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -2615,6 +2603,36 @@ try {
     else Function("r", "regeneratorRuntime = r")(runtime);
 }
 
-},{}]},["hycaY","aenu9"], "aenu9", "parcelRequire3a11")
+},{}],"Y4A21":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "state", ()=>state);
+parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
+const state = {
+    recipe: {}
+};
+const renameKeys = function(obj) {
+    const keyValues = Object.keys(obj).map((key)=>{
+        const index = key.indexOf("_");
+        const newKey = index > 1 ? `${key.slice(0, index)}${key.slice(index + 1)[0].toUpperCase()}${key.slice(index + 2)}` : key;
+        return {
+            [newKey]: obj[key]
+        };
+    });
+    return Object.assign({}, ...keyValues);
+};
+const loadRecipe = async function(id) {
+    try {
+        const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`);
+        const data = await res.json();
+        if (!res.ok) throw new Error(`${data.message} (${res.status})`);
+        state.recipe = renameKeys(data.data.recipe);
+        console.log(state.recipe);
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hycaY","aenu9"], "aenu9", "parcelRequire3a11")
 
 //# sourceMappingURL=index.e37f48ea.js.map
