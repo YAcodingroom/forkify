@@ -25,6 +25,10 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  addHandlerRender(handler) {
+    ['load', 'hashchange'].forEach(e => window.addEventListener(e, handler));
+  }
+
   #clear() {
     this.#parentElement.innerHTML = '';
   }
@@ -35,8 +39,8 @@ class RecipeView {
         <img src="${this.#data.imageUrl}" alt="${
       this.#data.title
     }" class="recipe__img" />
-        <h1 class="${this.#data.title}">
-          <span>Pasta with tomato cream sauce</span>
+        <h1 class="recipe__title">
+          <span>${this.#data.title}</span>
         </h1>
       </figure>
 

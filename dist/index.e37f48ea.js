@@ -604,10 +604,10 @@ const controlRecipes = async function() {
         console.error(err.message);
     }
 };
-[
-    "load",
-    "hashchange"
-].forEach((e)=>window.addEventListener(e, controlRecipes));
+const init = function() {
+    (0, _recipeViewJsDefault.default).addHandlerRender(controlRecipes);
+};
+init();
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ","./model.js":"Y4A21","./views/recipeView.js":"l60JC"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -2546,6 +2546,12 @@ class RecipeView {
         this.#clear();
         this.#parentElement.insertAdjacentHTML("afterbegin", markup);
     }
+    addHandlerRender(handler) {
+        [
+            "load",
+            "hashchange"
+        ].forEach((e)=>window.addEventListener(e, handler));
+    }
     #clear() {
         this.#parentElement.innerHTML = "";
     }
@@ -2553,8 +2559,8 @@ class RecipeView {
         return `
       <figure class="recipe__fig">
         <img src="${this.#data.imageUrl}" alt="${this.#data.title}" class="recipe__img" />
-        <h1 class="${this.#data.title}">
-          <span>Pasta with tomato cream sauce</span>
+        <h1 class="recipe__title">
+          <span>${this.#data.title}</span>
         </h1>
       </figure>
 
