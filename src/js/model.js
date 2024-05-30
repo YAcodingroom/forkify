@@ -30,7 +30,6 @@ export const loadRecipe = async function (id) {
     const data = await getJSON(`${API_URL}${id}`);
 
     state.recipe = renameKeys(data.data.recipe);
-    console.log(state.recipe);
   } catch (err) {
     console.error(`${err} 💥💥`);
     throw err;
