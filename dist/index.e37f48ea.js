@@ -3271,17 +3271,19 @@ class PaginationView extends (0, _viewJsDefault.default) {
         const numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
         // first page
         if (curPage === 1 && numPages > 1) return `
+        <div class="pagination__current-page">${curPage}</div>
         ${this._generateMarkupBtnNext(curPage)}
-
       `;
         // last page
         if (curPage === numPages && numPages > 1) return `
         ${this._generateMarkupBtnPrev(curPage)}
+        <div class="pagination__current-page">${curPage}</div>
       `;
         // others page
         if (curPage < numPages) return `
-        ${this._generateMarkupBtnNext(curPage)}
-        ${this._generateMarkupBtnPrev(curPage)}
+      ${this._generateMarkupBtnPrev(curPage)}
+      <div class="pagination__current-page">${curPage}</div>
+      ${this._generateMarkupBtnNext(curPage)}
       `;
         // only one page
         return "";

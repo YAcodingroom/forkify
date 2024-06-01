@@ -25,8 +25,8 @@ class PaginationView extends View {
     // first page
     if (curPage === 1 && numPages > 1) {
       return `
+        <div class="pagination__current-page">${curPage}</div>
         ${this._generateMarkupBtnNext(curPage)}
-
       `;
     }
 
@@ -34,14 +34,16 @@ class PaginationView extends View {
     if (curPage === numPages && numPages > 1) {
       return `
         ${this._generateMarkupBtnPrev(curPage)}
+        <div class="pagination__current-page">${curPage}</div>
       `;
     }
 
     // others page
     if (curPage < numPages) {
       return `
-        ${this._generateMarkupBtnNext(curPage)}
-        ${this._generateMarkupBtnPrev(curPage)}
+      ${this._generateMarkupBtnPrev(curPage)}
+      <div class="pagination__current-page">${curPage}</div>
+      ${this._generateMarkupBtnNext(curPage)}
       `;
     }
 

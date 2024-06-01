@@ -12,19 +12,28 @@
 .pagination {
   margin-top: auto;
   padding: 0 3.5rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+  align-items: center;
 
-  &::after {
-    content: '';
-    display: table;
-    clear: both;
+  // &::after {
+  //   content: '';
+  //   display: table;
+  //   clear: both;
+  // }
+
+  &__current-page {
+    grid-column: 2 / 3;
   }
-
   &__btn {
     &--prev {
-      float: left;
+      grid-column: 1 / 2;
+      // float: left;
     }
     &--next {
-      float: right;
+      grid-column: 3 / 4;
+      // float: right;
     }
   }
 }
