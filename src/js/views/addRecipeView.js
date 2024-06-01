@@ -37,8 +37,6 @@ class AddRecipeView extends View {
     this._btnClose.addEventListener('click', this._toggleWindow.bind(this));
     this._overlay.addEventListener('click', this._toggleWindow.bind(this));
   }
-
-  _generateMarkup() {}
 }
 
 export default new AddRecipeView();
